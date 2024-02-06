@@ -6,7 +6,6 @@
 
             -   `POST /register` # User registration
             -   `POST /login` # User login
-            -   `POST /logout` # User logout
 
         -   /users
 

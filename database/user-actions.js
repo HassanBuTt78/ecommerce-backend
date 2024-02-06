@@ -1,19 +1,21 @@
 const { User } = require("../model/user.js");
 const CustomError = require("../utils/custom-error.js");
 
-const addUser = (data, role) => {
-    const user = new User({
-        username: data.username,
-        password: data.password,
-        role: role,
-    });
-    const savedUser = user.save();
-    return savedUser;
+const addUser = async (data) => {
+    try {
+        const savedUser = await User.create(data);
+        if (!savedUser) {
+            throw new CustomError(500, "failed to register new user");
+        }
+        return savedUser;
+    } catch (err) {
+        throw new CustomError(500, "failed to register new user");
+    }
 };
 
 const getUserByUsername = async (username) => {
-    const data = await User.findOne({ username: username }).select(
-        "username password _id"
+    const data = await User.findOne({ email: username }).select(
+        "email password _id"
     );
     return data;
 };

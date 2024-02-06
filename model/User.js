@@ -1,22 +1,30 @@
 const mongoose = require("mongoose");
 
-const connectDB = (URI) => {
-    const db = mongoose.connect(URI);
-    return db;
-};
-
-const cartItemSchema = new mongoose.Schema({
-    productId: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
-    quantity: { type: Number, default: 1 },
-});
-
 const User = mongoose.model(
     "user",
     new mongoose.Schema(
         {
-            username: String,
-            password: String,
-            role: String,
+            fname: {
+                type: String,
+                required: true,
+            },
+            lname: {
+                type: String,
+                required: true,
+            },
+            email: {
+                type: String,
+                required: true,
+                unique: true,
+            },
+            password: {
+                type: String,
+                required: true,
+            },
+            role: {
+                type: String,
+                default: "user",
+            },
             addresses: [
                 {
                     street: String,
@@ -41,5 +49,4 @@ const User = mongoose.model(
 );
 module.exports = {
     User,
-    connectDB,
 };

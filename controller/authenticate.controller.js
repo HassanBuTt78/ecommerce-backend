@@ -4,15 +4,16 @@ const CustomError = require("../utils/custom-error.js");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-const registerUser = async (data, role) => {
+const registerUser = async (data) => {
     data.password = await bcrypt.hash(data.password, saltRounds);
-    const savedData = await db.addUser(data, role);
-    if (!savedData) return false;
-    return true;
+
+    const savedData = await db.addUser(data);
+
+    return savedData;
 };
 
 const authenticateUser = async (data) => {
-    const user = await db.getUserByUsername(data.username);
+    const user = await db.getUserByUsername(data.email);
     if (!user) {
         const err = new CustomError(404, "username doesn't exist");
         throw err;
@@ -29,30 +30,26 @@ const authController = {
     signup: async (req, res, next) => {
         try {
             const data = req.body;
-            //Checking for valid Body
-            if (!("username" in data) || !("password" in data)) {
-                const err = new CustomError(400, "invalid body");
-                throw err;
-            }
 
             //Checking for Existing Username
-            const existingUser = await db.getUserByUsername(data.username);
+            const existingUser = await db.getUserByUsername(data.email);
             if (existingUser) {
-                const err = new CustomError(409, "username already taken");
+                const err = new CustomError(
+                    409,
+                    "Already an account on this email - you can login"
+                );
                 throw err;
             }
 
             //Adding User in Database
-            const registered = await registerUser(data, "user");
-            if (!registered) {
-                const err = new CustomError(500, "server ran into a problem");
-                throw err;
-            }
+            const registered = await registerUser(data);
+            delete registered.password;
+
             //Send Success Message
             res.status(200).json({
                 success: true,
                 message: "Successfully Registered User",
-                data: {},
+                data: registered,
             });
             res.end();
         } catch (err) {
@@ -65,7 +62,7 @@ const authController = {
         try {
             const data = req.body;
             //Checking for valid Body
-            if (!("username" in data) || !("password" in data)) {
+            if (!("email" in data) || !("password" in data)) {
                 const err = new CustomError(400, "invalid body");
                 throw err;
             }

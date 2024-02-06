@@ -1,10 +1,10 @@
 const app = require("./app.js");
-const { connectDB } = require("./model/user.js");
+const mongoose = require("mongoose");
 require("dotenv").config();
 
-const db = connectDB(process.env.DBURI);
+const db = mongoose.connect(process.env.DBURI);
 db.then(() => {
-  app.listen(process.env.PORT, (err) => {
-    console.log(`app is listing on port ${process.env.PORT}`);
-  });
+    app.listen(process.env.PORT, (err) => {
+        console.log(`app is listing on port ${process.env.PORT}`);
+    });
 });
