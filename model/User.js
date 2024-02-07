@@ -34,7 +34,7 @@ const User = mongoose.model(
             },
             cart: [
                 {
-                    productId: {
+                    product: {
                         type: mongoose.Schema.Types.ObjectId,
                         ref: "product",
                     },

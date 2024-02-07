@@ -18,9 +18,8 @@ const makeOrder = async (params) => {
             throw new CustomError(500, "Server ran into a problem");
         }
         const orderItem = {
-            _id: items[i]._id,
+            product: items[i]._id,
             quantity: items[i].quantity,
-            price: product.price,
             total: product.price * item.quantity,
         };
         orderItems.push(orderItem);
@@ -50,7 +49,10 @@ const getAllOrdersOf = async (userId) => {
 };
 
 const orderDetails = async (orderId, userId) => {
-    const order = await Order.findOne({ userId: userId, _id: orderId });
+    const order = await Order.findOne({
+        userId: userId,
+        _id: orderId,
+    }).populate("items.product", "name price image");
     if (!order) {
         throw new CustomError(500, "couldn't find your order - try again");
     }

@@ -3,7 +3,9 @@ const Product = require("../model/Product.js");
 const CustomError = require("../utils/custom-error.js");
 
 const getUserCart = async (id) => {
-    const data = await User.findOne({ _id: id }).select("cart");
+    const data = await User.findOne({ _id: id })
+        .select("cart")
+        .populate("cart.product");
     if (!data) {
         throw new CustomError(500, "Server ran into a problem");
     }
@@ -24,14 +26,14 @@ const addItemToCart = async (obj) => {
     const user = await User.findById(obj.userId);
 
     const existingCartItemIndex = user.cart.findIndex((item) => {
-        return String(item._id) === String(productDetails._id);
+        return String(item.product) === String(productDetails._id);
     });
 
     if (existingCartItemIndex !== -1) {
         throw new CustomError(200, "item is already in cart");
     } else {
         user.cart.push({
-            _id: productDetails._id,
+            product: productDetails._id,
             quantity: obj.quantity,
         });
     }
