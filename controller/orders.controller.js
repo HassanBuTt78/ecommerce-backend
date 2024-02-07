@@ -1,6 +1,10 @@
 const db = require("../database/order-actions.js");
 const cartActions = require("../database/cart-actions.js");
 const CustomError = require("../utils/custom-error.js");
+const {
+    newOrderSchema,
+    updateOrderSchema,
+} = require("../utils/validation-schemas.js");
 
 const orderController = {
     createOrder: async (req, res, next) => {
@@ -13,18 +17,21 @@ const orderController = {
             } else {
                 items = await cartActions.getUserCart(userId);
             }
-            if (!items || items.length === 0) {
-                throw new CustomError(
-                    200,
-                    "failed to place order, cart is empty"
-                );
-            }
-
-            const orderData = await db.makeOrder({
+            console.log(items);
+            const doc = {
                 userId,
                 items,
                 address,
+            };
+
+            const { error, _ } = newOrderSchema.validate(doc, {
+                stripUnknown: true,
             });
+            if (error) {
+                throw new CustomError(400, error.details[0].message);
+            }
+
+            const orderData = await db.makeOrder(doc);
 
             const clearedCart = await cartActions.emptyCart(userId);
             if (clearedCart.cart.length !== 0) {
@@ -70,8 +77,10 @@ const orderController = {
         try {
             const update = req.body;
             const orderId = req.params.orderId;
-            delete update._id;
-            delete update.userId;
+            const { error, _ } = updateOrderSchema.validate(update);
+            if (error) {
+                throw new CustomError(400, error.details[0].message);
+            }
             const updatedOrder = await db.updateOrder(orderId, update);
             res.json({
                 success: true,

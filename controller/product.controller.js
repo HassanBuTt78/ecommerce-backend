@@ -1,5 +1,9 @@
 const db = require("../database/product-actions.js");
 const CustomError = require("../utils/custom-error.js");
+const {
+    productSchema,
+    productUpdateSchema,
+} = require("../utils/validation-schemas.js");
 const productController = {
     getProducts: async (req, res, next) => {
         try {
@@ -34,15 +38,9 @@ const productController = {
     makeProduct: async (req, res, next) => {
         try {
             const body = req.body;
-            if (
-                !body.name ||
-                !body.description ||
-                !body.price ||
-                !body.stock ||
-                !body.category
-            ) {
-                const err = new CustomError(400, "invalid body");
-                throw err;
+            const { error, value } = productSchema.validate(body);
+            if (error) {
+                throw new CustomError(400, error.details[0].message);
             }
             const dataSaved = await db.addProduct(body);
             res.json({
@@ -58,8 +56,9 @@ const productController = {
         try {
             const body = req.body;
             const productId = req.params.productId;
-            if ("_id" in body) {
-                delete body._id;
+            const { error, value } = productUpdateSchema.validate(body);
+            if (error) {
+                throw new CustomError(400, error.details[0].message);
             }
             const updatedProduct = await db.updateProduct(productId, body);
             res.json({

@@ -1,5 +1,6 @@
 const db = require("../database/user-actions.js");
 const { makeToken } = require("../utils/jwt.js");
+const validator = require("../utils/validation-schemas.js");
 const CustomError = require("../utils/custom-error.js");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -15,7 +16,7 @@ const registerUser = async (data) => {
 const authenticateUser = async (data) => {
     const user = await db.getUserByUsername(data.email);
     if (!user) {
-        const err = new CustomError(404, "username doesn't exist");
+        const err = new CustomError(404, "email doesn't exist");
         throw err;
     }
     const truePass = await bcrypt.compare(data.password, user.password);
@@ -30,6 +31,11 @@ const authController = {
     signup: async (req, res, next) => {
         try {
             const data = req.body;
+            const { error, value } = validator.registerSchema.validate(data);
+
+            if (error) {
+                throw new CustomError(400, error.details[0].message);
+            }
 
             //Checking for Existing Username
             const existingUser = await db.getUserByUsername(data.email);
@@ -62,11 +68,11 @@ const authController = {
         try {
             const data = req.body;
             //Checking for valid Body
-            if (!("email" in data) || !("password" in data)) {
-                const err = new CustomError(400, "invalid body");
-                throw err;
-            }
+            const { error, value } = validator.loginSchema.validate(data);
 
+            if (error) {
+                throw new CustomError(400, error.details[0].message);
+            }
             //authenticating User
             const userData = await authenticateUser(data);
 

@@ -46,7 +46,7 @@ const insertReview = async (doc) => {
     });
 
     if (presentReview > 0) {
-        throw new CustomError(403, "this user already reviewed this product");
+        throw new CustomError(409, "this user already reviewed this product");
     }
     const savedReview = await Review.create(doc);
     if (!savedReview) {

@@ -27,10 +27,7 @@ const getUserById = async (id) => {
 const updateUser = async (id, update) => {
     const updatedUser = await User.findOneAndUpdate({ _id: id }, update, {
         new: true,
-    });
-    if (!updatedUser) {
-        throw new CustomError(500, "Couldn't add Item to cart, try again");
-    }
+    }).select("-password -cart");
     return updatedUser;
 };
 

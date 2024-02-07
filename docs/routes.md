@@ -38,7 +38,3 @@
 
             -   `GET /:productId` # Get reviews for a specific product
             -   `POST /:productId` # Add a new review for a product
-
-        -   /payments
-
-            -   `POST /` # Process a payment

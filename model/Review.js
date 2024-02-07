@@ -9,10 +9,6 @@ const Review = mongoose.model(
                 ref: "user",
                 required: true,
             },
-            username: {
-                type: String,
-                required: true,
-            },
             productId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "product",

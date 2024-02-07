@@ -1,6 +1,6 @@
 const db = require("../database/review-actions.js");
 const CustomError = require("../utils/custom-error.js");
-
+const { reviewSchema } = require("../utils/validation-schemas.js");
 const reviewController = {
     getReviews: async (req, res, next) => {
         try {
@@ -23,19 +23,17 @@ const reviewController = {
     writeReview: async (req, res, next) => {
         try {
             const userId = req.userData._id;
-            const username = req.userData.username;
             const productId = req.params.productId;
-            const comment = req.body.comment || "";
-            const rating = req.body.rating;
-            if (!rating) {
-                throw new CustomError(400, "Body doesn't have rating");
+            const { error, _ } = reviewSchema.validate(req.body);
+            if (error) {
+                throw new CustomError(400, error.details[0].message);
             }
+
             const savedReview = await db.insertReview({
                 userId,
-                username,
                 productId,
-                comment,
-                rating,
+                comment: req.body.comment || "",
+                rating: req.body.rating,
             });
 
             res.json({

@@ -4,11 +4,11 @@ const User = mongoose.model(
     "user",
     new mongoose.Schema(
         {
-            fname: {
+            firstName: {
                 type: String,
                 required: true,
             },
-            lname: {
+            lastName: {
                 type: String,
                 required: true,
             },
@@ -25,15 +25,13 @@ const User = mongoose.model(
                 type: String,
                 default: "user",
             },
-            addresses: [
-                {
-                    street: String,
-                    state: String,
-                    City: String,
-                    Country: String,
-                    zip: String,
-                },
-            ],
+            address: {
+                street: String,
+                state: String,
+                City: String,
+                Country: String,
+                zip: String,
+            },
             cart: [
                 {
                     productId: {
