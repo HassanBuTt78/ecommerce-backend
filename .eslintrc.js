@@ -21,6 +21,7 @@ module.exports = {
     },
     rules: {
         "no-console": ["warn"],
+        "no-unused-vars": ["warn"],
         indent: ["error", 4],
         "linebreak-style": ["error", "windows"],
         quotes: ["error", "double"],

@@ -11,10 +11,10 @@ const errorHandler = (err, req, res, next) => {
             },
         });
     }
-    
+
     // eslint-disable-next-line no-console
     console.log(`ERROR::: ${err.message}`, err.stack);
-    
+
     return res.status(500).json({
         success: false,
         error: {
