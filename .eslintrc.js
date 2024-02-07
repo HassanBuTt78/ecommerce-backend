@@ -20,6 +20,7 @@ module.exports = {
         ecmaVersion: "latest",
     },
     rules: {
+        "no-console": ["warn"],
         indent: ["error", 4],
         "linebreak-style": ["error", "windows"],
         quotes: ["error", "double"],

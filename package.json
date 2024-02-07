@@ -2,10 +2,11 @@
   "name": "auth_system",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server",
   "scripts": {
-    "dev": "eslint . && nodemon server.js",
-    "start": "node server.js"
+    "lint": "eslint .",
+    "start": "node server",
+    "dev": "nodemon --exec \"npm run lint && npm start\""
   },
   "keywords": [],
   "author": "",
