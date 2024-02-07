@@ -1,11 +1,11 @@
 const joi = require("joi");
+const categories = ["electronics", "apparel", "home", "beauty", "outdoors"];
 
 const registerSchema = joi.object({
     firstName: joi.string().max(20).required(),
     lastName: joi.string().max(20).required(),
     email: joi.string().email().required(),
     password: joi.string().min(8).max(30).required(),
-    role: joi.string(),
     address: joi
         .object({
             street: joi.string().required(),
@@ -43,7 +43,7 @@ const productSchema = joi.object({
     stock: joi.number().required(),
     category: joi
         .string()
-        .valid("electronics", "apparel", "home", "beauty", "outdoors")
+        .valid(...categories)
         .required(),
 });
 
@@ -53,9 +53,7 @@ const productUpdateSchema = joi.object({
     image: joi.string().uri({ scheme: ["http", "https"] }),
     price: joi.number().min(1),
     stock: joi.number(),
-    category: joi
-        .string()
-        .valid("electronics", "apparel", "home", "beauty", "outdoors"),
+    category: joi.string().valid(...categories),
 });
 
 const newOrderSchema = joi.object({
