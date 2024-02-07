@@ -24,7 +24,7 @@ const reviewController = {
         try {
             const userId = req.userData._id;
             const productId = req.params.productId;
-            const { error, _ } = reviewSchema.validate(req.body);
+            const { error } = reviewSchema.validate(req.body);
             if (error) {
                 throw new CustomError(400, error.details[0].message);
             }

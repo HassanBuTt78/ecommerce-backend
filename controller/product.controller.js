@@ -38,7 +38,7 @@ const productController = {
     makeProduct: async (req, res, next) => {
         try {
             const body = req.body;
-            const { error, value } = productSchema.validate(body);
+            const { error } = productSchema.validate(body);
             if (error) {
                 throw new CustomError(400, error.details[0].message);
             }
@@ -56,7 +56,7 @@ const productController = {
         try {
             const body = req.body;
             const productId = req.params.productId;
-            const { error, value } = productUpdateSchema.validate(body);
+            const { error } = productUpdateSchema.validate(body);
             if (error) {
                 throw new CustomError(400, error.details[0].message);
             }

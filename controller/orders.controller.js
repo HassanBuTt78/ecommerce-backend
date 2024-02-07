@@ -24,7 +24,7 @@ const orderController = {
                 address,
             };
 
-            const { error, _ } = newOrderSchema.validate(doc, {
+            const { error } = newOrderSchema.validate(doc, {
                 stripUnknown: true,
             });
             if (error) {
@@ -77,7 +77,7 @@ const orderController = {
         try {
             const update = req.body;
             const orderId = req.params.orderId;
-            const { error, _ } = updateOrderSchema.validate(update);
+            const { error } = updateOrderSchema.validate(update);
             if (error) {
                 throw new CustomError(400, error.details[0].message);
             }

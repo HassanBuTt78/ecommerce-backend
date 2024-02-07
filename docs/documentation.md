@@ -63,9 +63,9 @@
 
 ### Update User Profile
 
--   **Endpoint**: PUT /api/v1/users
--   **Description**: Update the current user's profile.
--   **Request Body**:
+-   **Endpoint:** `PUT /api/v1/users`
+-   **Description:** Update the current user's profile.
+-   **Request Body:**
     -   `firstName` (string, max 20 characters)
     -   `lastName` (string, max 20 characters)
     -   `email` (string, valid email format)
@@ -237,8 +237,8 @@
 -   **Description:** Update the status of an order (Admin only).
 -   **Request Body:**
     -   `status` (string, valid order statuses)
-    -   `paymentSt tus` (stri g, valid payment statuses)
-    -   `paymentMe hod` (string valid payment methods)
+    -   `paymentStatus` (stri g, valid payment statuses)
+    -   `paymentMethod` (string valid payment methods)
 -   **Valid Statuses:**
 
     -   **Order Statuses:** -`pending` -`processing` -`dispatched` -`delivered`

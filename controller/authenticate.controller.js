@@ -31,7 +31,7 @@ const authController = {
     signup: async (req, res, next) => {
         try {
             const data = req.body;
-            const { error, value } = validator.registerSchema.validate(data);
+            const { error } = validator.registerSchema.validate(data);
 
             if (error) {
                 throw new CustomError(400, error.details[0].message);
@@ -68,7 +68,7 @@ const authController = {
         try {
             const data = req.body;
             //Checking for valid Body
-            const { error, value } = validator.loginSchema.validate(data);
+            const { error } = validator.loginSchema.validate(data);
 
             if (error) {
                 throw new CustomError(400, error.details[0].message);

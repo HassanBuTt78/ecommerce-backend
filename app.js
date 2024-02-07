@@ -10,3 +10,8 @@ app.use("/api/v1", router);
 app.use(errorHandler);
 
 module.exports = app;
+
+//Improvements
+// Optimizing Data Model
+// Saperate Cart Model from User
+// Use Population to populate "user data in reviews" -- "cart with items along with quantity"

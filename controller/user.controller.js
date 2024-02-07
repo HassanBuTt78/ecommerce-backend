@@ -1,5 +1,4 @@
 const db = require("../database/user-actions.js");
-const { User } = require("../model/user.js");
 const validator = require("../utils/validation-schemas.js");
 const CustomError = require("../utils/custom-error.js");
 
@@ -14,8 +13,7 @@ const userController = {
     updateUserData: async (req, res, next) => {
         try {
             const update = req.body;
-            const { error, value } =
-                validator.updateUserSchema.validate(update);
+            const { error } = validator.updateUserSchema.validate(update);
             if (error) {
                 throw new CustomError(400, error.details[0].message);
             }
