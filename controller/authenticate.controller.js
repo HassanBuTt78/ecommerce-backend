@@ -1,6 +1,5 @@
 const db = require("../database/user-actions.js");
 const { makeToken } = require("../utils/jwt.js");
-const validator = require("../utils/validation-schemas.js");
 const CustomError = require("../utils/custom-error.js");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -28,65 +27,46 @@ const authenticateUser = async (data) => {
 };
 
 const authController = {
-    signup: async (req, res, next) => {
-        try {
-            const data = req.body;
-            const { error } = validator.registerSchema.validate(data);
+    signup: async (req, res) => {
+        const data = req.body;
 
-            if (error) {
-                throw new CustomError(400, error.details[0].message);
-            }
-
-            //Checking for Existing Username
-            const existingUser = await db.getUserByUsername(data.email);
-            if (existingUser) {
-                const err = new CustomError(
-                    409,
-                    "Already an account on this email - you can login"
-                );
-                throw err;
-            }
-
-            //Adding User in Database
-            const registered = await registerUser(data);
-            delete registered.password;
-
-            //Send Success Message
-            res.status(200).json({
-                success: true,
-                message: "Successfully Registered User",
-                data: registered,
-            });
-            res.end();
-        } catch (err) {
-            next(err);
+        //Checking for Existing Username
+        const existingUser = await db.getUserByUsername(data.email);
+        if (existingUser) {
+            const err = new CustomError(
+                409,
+                "Already an account on this email - you can login"
+            );
+            throw err;
         }
+
+        //Adding User in Database
+        const registered = await registerUser(data);
+        delete registered.password;
+
+        //Send Success Message
+        res.status(200).json({
+            success: true,
+            message: "Successfully Registered User",
+            data: registered,
+        });
+        res.end();
     },
     //
     //
-    login: async (req, res, next) => {
-        try {
-            const data = req.body;
-            //Checking for valid Body
-            const { error } = validator.loginSchema.validate(data);
+    login: async (req, res) => {
+        const data = req.body;
+        //authenticating User
+        const userData = await authenticateUser(data);
 
-            if (error) {
-                throw new CustomError(400, error.details[0].message);
-            }
-            //authenticating User
-            const userData = await authenticateUser(data);
-
-            //making token
-            const token = makeToken(userData);
-            res.cookie("jwt", token);
-            return res.status(200).json({
-                success: true,
-                message: "You are Logged In",
-                data: {},
-            });
-        } catch (err) {
-            next(err);
-        }
+        //making token
+        const token = makeToken(userData);
+        res.cookie("jwt", token);
+        return res.status(200).json({
+            success: true,
+            message: "You are Logged In",
+            data: {},
+        });
     },
 };
 
