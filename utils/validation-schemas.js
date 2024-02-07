@@ -38,6 +38,7 @@ const updateUserSchema = joi.object({
 const productSchema = joi.object({
     name: joi.string().required(),
     description: joi.string().required(),
+    image: joi.string().uri({ scheme: ["http", "https"] }),
     price: joi.number().min(1).required(),
     stock: joi.number().required(),
     category: joi
@@ -49,6 +50,7 @@ const productSchema = joi.object({
 const productUpdateSchema = joi.object({
     name: joi.string(),
     description: joi.string(),
+    image: joi.string().uri({ scheme: ["http", "https"] }),
     price: joi.number().min(1),
     stock: joi.number(),
     category: joi
