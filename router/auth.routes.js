@@ -11,7 +11,7 @@ router.post(
 );
 router.post(
     "/login",
-    [validator(validationSchemas.registor)],
+    [validator(validationSchemas.login)],
     authController.login
 );
 

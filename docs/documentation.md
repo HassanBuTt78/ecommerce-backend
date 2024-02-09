@@ -279,4 +279,26 @@
 }
 ```
 
+## Uploads
+
+### Get List of Uploads
+
+-   **Endpoint:** `GET /api/v1/uploads`
+-   **Description:** get list of uploads and their information
+
+### Upload a new image file
+
+-   **Endpoint:** `POST /api/v1/uploads`
+-   **Description:** Upload a new image to the server.
+-   **Request Body:**
+    -   `alt` (string) alt title for the image
+    -   `image` (image file(only image formats))
+
+### Delete a upload from server
+
+-   **Endpoint:** `DELETE /api/v1/uploads/:fileName`
+-   **Description:** Delete the uploaded image from server
+-   **fileName:** fileName should be the `name` you get from `GET /api/v1/uploads`
+
+
 ---

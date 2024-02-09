@@ -38,3 +38,8 @@
 
             -   `GET /:productId` # Get reviews for a specific product
             -   `POST /:productId` # Add a new review for a product
+        -   /uploads
+
+            -   `GET /` # Get list of uploads
+            -   `DELETE /:fileName` # Delete a specific uplaod
+            -   `POST /` # Upload a new image files
