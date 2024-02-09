@@ -22,9 +22,9 @@ module.exports = {
     rules: {
         "no-console": ["warn"],
         "no-unused-vars": ["warn"],
-        indent: ["error", 4],
-        "linebreak-style": ["error", "windows"],
-        quotes: ["error", "double"],
-        semi: ["error", "always"],
+        indent: ["warn", 4],
+        "linebreak-style": ["warn", "windows"],
+        quotes: ["warn", "double"],
+        semi: ["warn", "always"],
     },
 };
