@@ -6,7 +6,7 @@ const productsRouter = require("./products.routes.js");
 const cartRouter = require("./cart.routes.js");
 const orderRouter = require("./orders.routes.js");
 const reviewRouter = require("./review.routes.js");
-const gallaryRouter = require("./gallary.routes.js");
+const gallaryRouter = require("./uploads.routes.js");
 
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
