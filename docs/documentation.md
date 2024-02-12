@@ -54,6 +54,40 @@
 }
 ```
 
+### User Reset Password
+
+-   **Endpoint:** `POST /api/v1/auth/reset-password`
+-   **Description:** Send Email to reset Password.
+-   **Request Body:**
+    -   `email` (string, valid email format, required): Email address of the account to reset password
+
+**Example:**
+
+```json
+{
+    "email": "john.doe@example.com",
+}
+```
+
+### User Make new Password
+
+-   **Endpoint:** `PUT /api/v1/auth/reset-password`
+-   **Description:** The link user will recieve in email.
+-   **Query Params:** 
+    -   `token`: verification token, sent in email link
+    -   `code`: verification code, sent in the email link
+-   **Request Body:**
+    -   `password` (string, valid email format, required): new Password to be changed
+
+**Example:**
+
+```json
+{
+    "email": "john.doe@example.com",
+}
+```
+
+
 ## User Profile
 
 ### Get Current User Profile
