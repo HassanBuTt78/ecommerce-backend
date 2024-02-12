@@ -24,6 +24,7 @@ const validationSchemas = {
     userUpdate: joi.object({
         firstName: joi.string().max(20),
         lastName: joi.string().max(20),
+        verified: joi.bool(),
         email: joi.string().email(),
         address: joi.object({
             street: joi.string().required(),
@@ -32,6 +33,12 @@ const validationSchemas = {
             Country: joi.string().required(),
             zip: joi.string().required(),
         }),
+    }),
+    updatePassword: joi.object({
+        password: joi.string().min(8).max(30).required(),
+    }),
+    resetPassByEmail: joi.object({
+        email: joi.string().email().required(),
     }),
     productCreation: joi.object({
         name: joi.string().required(),
@@ -103,6 +110,10 @@ const validationSchemas = {
     reviewCreation: joi.object({
         rating: joi.number().min(1).max(5).required(),
         comment: joi.string().max(500),
+    }),
+    verification: joi.object({
+        token: joi.string().required(),
+        code: joi.string().length(6).required(),
     }),
 };
 

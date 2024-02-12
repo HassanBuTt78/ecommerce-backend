@@ -1,4 +1,4 @@
-const fs = require("fs").promises; // Using the promises version of fs for async/await
+const fs = require("fs").promises;
 const path = require("path");
 const CustomError = require("./custom-error.js");
 

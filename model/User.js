@@ -17,6 +17,10 @@ const User = mongoose.model(
                 required: true,
                 unique: true,
             },
+            verified: {
+                type: String,
+                default: false,
+            },
             password: {
                 type: String,
                 required: true,
