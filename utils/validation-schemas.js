@@ -4,18 +4,16 @@ const categories = ["electronics", "apparel", "home", "beauty", "outdoors"];
 const validationSchemas = {
     registor: joi.object({
         firstName: joi.string().max(20).required(),
-        lastName: joi.string().max(20).required(),
+        lastName: joi.string().max(20),
         email: joi.string().email().required(),
         password: joi.string().min(8).max(30).required(),
-        address: joi
-            .object({
-                street: joi.string().required(),
-                state: joi.string().required(),
-                City: joi.string().required(),
-                Country: joi.string().required(),
-                zip: joi.string().required(),
-            })
-            .required(),
+        address: joi.object({
+            street: joi.string().required(),
+            state: joi.string().required(),
+            City: joi.string().required(),
+            Country: joi.string().required(),
+            zip: joi.string().required(),
+        }),
     }),
     login: joi.object({
         email: joi.string().email().required(),

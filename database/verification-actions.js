@@ -1,5 +1,4 @@
 const Verification = require("../model/Verification.js");
-// eslint-disable-next-line no-unused-vars
 const CustomError = require("../utils/custom-error.js");
 
 function generateHexCode() {
