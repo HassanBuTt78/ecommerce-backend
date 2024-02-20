@@ -21,10 +21,10 @@ router.put(
     [validator(validationSchemas.updatePassword), codeVerification],
     authController.changePassword
 );
-router.post(
-    "/reset-password",
-    [validator(validationSchemas.resetPassByEmail)],
-    authController.resetPassword
-);
+// router.post(
+//     "/reset-password",
+//     [validator(validationSchemas.resetPassByEmail)],
+//     authController.resetPassword
+// );
 
 module.exports = router;
