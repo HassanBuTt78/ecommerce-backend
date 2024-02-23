@@ -228,7 +228,7 @@
 
 ### Place a New Order
 
--   **Endpoint:** POST /api/v1/orders
+-   **Endpoint:** `POST /api/v1/orders`
 -   **Description:** Place a new order.
 -   **Request Body:**
     -   `items` (array of objects): Items will be pulled from cart if not provided in body
