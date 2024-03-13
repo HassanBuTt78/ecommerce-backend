@@ -62,9 +62,7 @@ const validationSchemas = {
             .array()
             .items(
                 joi.object({
-                    _id: joi
-                        .alternatives(joi.string(), joi.object())
-                        .required(),
+                    _id: joi.alternatives(joi.string(), joi.object()).required(),
                     quantity: joi.number().min(1).required(),
                 })
             )
@@ -80,26 +78,14 @@ const validationSchemas = {
             .required(),
     }),
     orderUpdate: joi.object({
-        status: joi
-            .string()
-            .valid(
-                "pending",
-                "processing",
-                "dispatched",
-                "delivered",
-                "canceled"
-            ),
-        paymentStatus: joi
-            .string()
-            .valid("pending", "confirmed", "authorized", "failed"),
+        status: joi.string().valid("pending", "processing", "dispatched", "delivered", "canceled"),
+        paymentStatus: joi.string().valid("pending", "successful", "processing"),
         paymentMethod: joi.string().valid("cash-on-delivery"),
         items: joi
             .array()
             .items(
                 joi.object({
-                    _id: joi
-                        .alternatives(joi.string(), joi.object())
-                        .required(),
+                    _id: joi.alternatives(joi.string(), joi.object()).required(),
                     quantity: joi.number().min(1).required(),
                 })
             )

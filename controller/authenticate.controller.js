@@ -49,7 +49,7 @@ const authController = {
 
         const token = await verificationdb.createToken(registered._id);
         const mail = mailer.writeEmailVerification(registered.email, token);
-        // await mailer.sendEmail(mail);
+        await mailer.sendEmail(mail);
 
         //Send Success Message
         res.status(200).json({

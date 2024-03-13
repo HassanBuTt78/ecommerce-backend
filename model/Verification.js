@@ -14,7 +14,7 @@ const Verification = mongoose.model(
             },
             expiresAt: {
                 type: Date,
-                default: Date.now(),
+                
                 index: { expires: "24h" },
             },
         },

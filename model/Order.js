@@ -1,14 +1,5 @@
 const mongoose = require("mongoose");
 
-const cartItems = new mongoose.Schema({
-    product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "product",
-    },
-    quantity: { type: Number, default: 1 },
-    total: Number,
-});
-
 const Order = mongoose.model(
     "order",
     new mongoose.Schema(
@@ -19,7 +10,16 @@ const Order = mongoose.model(
             },
             status: { type: String, default: "pending" },
             paymentStatus: { type: String, default: "pending" },
-            items: [cartItems],
+            items: [
+                {
+                    product: {
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: "product",
+                    },
+                    quantity: { type: Number, default: 1 },
+                    total: Number,
+                },
+            ],
             shipping: {
                 address: {
                     street: String,
